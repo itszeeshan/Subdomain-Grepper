@@ -22,7 +22,7 @@ subgrep [-h] <wildcard_file> <unique_name>
 
 * **Example Wildcard File:**<br>
 Create a wildcard file with no extension. Just "wildcard" - no .txt etc. In that file add the domains for example ```facebook.com, meta.com```.
-  ![image](https://github.com/itszeeshan/Subdomain-Grepper/assets/35112049/f2822a5b-2100-4135-b29d-19db0b408b21)
+![image](https://github.com/itszeeshan/Subdomain-Grepper/assets/35112049/21b6612f-0ecc-493f-88cf-b12b312d317a)
 
 
 ### Output Files:
