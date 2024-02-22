@@ -19,10 +19,11 @@ Run bash install.sh
 ```
 subgrep [-h] <wildcard_file> <unique_name>
 ```
+![image](https://github.com/itszeeshan/Subdomain-Grepper/assets/35112049/21b6612f-0ecc-493f-88cf-b12b312d317a)
 
 * **Example Wildcard File:**<br>
 Create a wildcard file with no extension. Just "wildcard" - no .txt etc. In that file add the domains for example ```facebook.com, meta.com```.
-![image](https://github.com/itszeeshan/Subdomain-Grepper/assets/35112049/21b6612f-0ecc-493f-88cf-b12b312d317a)
+![image](https://github.com/itszeeshan/Subdomain-Grepper/assets/35112049/2c7234aa-521d-4cd2-bd08-c0426fa54253)
 
 
 ### Output Files:
