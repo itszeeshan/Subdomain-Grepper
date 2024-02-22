@@ -1,4 +1,4 @@
-# Usage: ./subdomaingrepper.sh <path_to_wildcard_file>
+# Usage: ./script.sh <path_to_wildcard_file> <output_folder_name>
 # Description: This script uses subfinder, findomain, assetfinder, amass, httpx, and nmap to enumerate subdomains, check for live domains, and check for open ports.
 # Output: The script will create a file called subdomains that contains all the subdomains found, a file called httpxout that contains all the live domains found, and a file called nmapout that contains all the open ports found.
 
