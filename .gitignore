@@ -49,3 +49,7 @@ roadmap.md
 
 # Development tests
 tests/dev_tests.sh
+
+
+public/sitemap*
+public/robots.txt
