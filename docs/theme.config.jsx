@@ -1,4 +1,10 @@
 import { useEffect, useState } from 'react'
+import { useConfig } from 'nextra-theme-docs'
+import { useRouter } from 'next/router'
+
+const SITE_URL = 'https://subdomainx.vercel.app'
+const DEFAULT_DESCRIPTION =
+  'Advanced Subdomain Discovery & Security Reconnaissance Tool — an all-in-one subdomain enumeration CLI integrating subfinder, amass, and 12+ tools with API sources.'
 
 function Logo() {
   const [version, setVersion] = useState('')
@@ -114,21 +120,33 @@ export default {
     prev: false,
     next: true,
   },
-  useNextSeoProps() {
-    return {
-      titleTemplate: 'SubdomainX Docs | %s'
-    }
+  head: function useHead() {
+    const { title, frontMatter } = useConfig()
+    const { asPath } = useRouter()
+    const url = SITE_URL + (asPath === '/' ? '' : asPath.split('#')[0].split('?')[0])
+    const pageTitle = title ? `SubdomainX Docs | ${title}` : 'SubdomainX Docs'
+    const description = frontMatter?.description || DEFAULT_DESCRIPTION
+
+    return (
+      <>
+        <title>{pageTitle}</title>
+        <meta name="description" content={description} />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="canonical" href={url} />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="SubdomainX" />
+        <meta property="og:url" content={url} />
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={description} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={pageTitle} />
+        <meta name="twitter:description" content={description} />
+        <link rel="stylesheet" href="/styles/globals.css" />
+        <link rel="icon" type="image/png" href="/logo.png" />
+        <link rel="apple-touch-icon" href="/logo.png" />
+      </>
+    )
   },
-  head: (
-    <>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <meta property="og:title" content="SubdomainX" />
-      <meta property="og:description" content="Advanced Subdomain Discovery & Security Reconnaissance Tool" />
-      <link rel="stylesheet" href="/styles/globals.css" />
-      <link rel="icon" type="image/png" href="/logo.png" />
-      <link rel="apple-touch-icon" href="/logo.png" />
-    </>
-  ),
   color: {
     hue: 245,
     saturation: 96,
