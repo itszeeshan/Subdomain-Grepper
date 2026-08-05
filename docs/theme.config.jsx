@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 
 const SITE_URL = 'https://subdomainx.vercel.app'
 const DEFAULT_DESCRIPTION =
-  'Advanced Subdomain Discovery & Security Reconnaissance Tool — an all-in-one subdomain enumeration CLI integrating subfinder, amass, and 12+ tools with API sources.'
+  'SubdomainX is an open-source subdomain enumeration and reconnaissance framework for bug bounty, pentesting, and attack surface mapping — 20+ tools and APIs, HTTP fingerprinting, port scanning, and subdomain takeover detection in one CLI.'
 
 function Logo() {
   const [version, setVersion] = useState('')

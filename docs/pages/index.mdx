@@ -1,10 +1,15 @@
 ---
-title: "Overview"
+title: "Subdomain Enumeration & Reconnaissance Framework"
+description: "SubdomainX is an open-source subdomain enumeration and reconnaissance framework for bug bounty, pentesting, and attack surface mapping — 20+ tools and APIs, HTTP fingerprinting, port scanning, and subdomain takeover detection in one CLI."
 ---
 
-# Overview
+# SubdomainX — Subdomain Enumeration & Reconnaissance Framework
 
-**SubdomainX** is a all-in-one subdomain enumeration and reconnaissance tool designed for modern cybersecurity professionals, penetration testers, and security researchers.
+**SubdomainX** is an open-source **reconnaissance framework** for security professionals, penetration testers, and bug bounty hunters. It started as a subdomain enumerator and grew into a full recon pipeline: it discovers subdomains across **20+ tools and APIs**, resolves live hosts, fingerprints their technology stack, scans ports, and flags subdomain takeover risks — then exports everything to your existing security workflow.
+
+## Summary
+
+SubdomainX takes a domain and turns it into a prioritized picture of your attack surface. Enumeration is still the core, but the tool no longer stops at a list of subdomains — it probes and fingerprints live hosts (httpx), scans ports (smap), detects dangling-CNAME **subdomain takeover** vulnerabilities with risk scoring, and ships results as JSON, HTML, CSV, or directly into **Burp Suite, OWASP ZAP, and Nessus**. A real-time TUI dashboard, checkpoint/resume, and a REST **API server mode** round it out. In short: a subdomain-focused recon framework, not just an enumerator.
 
 ### Perfect For:
 
