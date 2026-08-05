@@ -1,7 +1,8 @@
 <div align="center">
   <img src="docs/public/logo.png" alt="SubdomainX Logo" width="200"/>
   <h1>SubdomainX</h1>
-  <p><strong>Advanced Subdomain Discovery & Security Reconnaissance Tool</strong></p>
+  <p><strong>Subdomain Enumeration & Reconnaissance Framework</strong></p>
+  <p>Open-source recon framework for bug bounty, pentesting, and attack surface mapping — 20+ tools & APIs, HTTP fingerprinting, port scanning, and subdomain takeover detection in one CLI.</p>
 </div>
 
 <div align="center">
@@ -20,7 +21,7 @@
 
 </div>
 
-SubdomainX combines 12+ enumeration tools and 6+ API services into a single CLI. Run one command and get results from subfinder, amass, crt.sh, SecurityTrails, VirusTotal, and more — deduplicated and ready to use.
+SubdomainX is a subdomain-focused reconnaissance framework. It started as a subdomain enumerator and grew into a full recon pipeline: it combines 20+ enumeration tools and API services into a single CLI, resolves and fingerprints live hosts (httpx), scans ports (smap), and flags subdomain takeover risks — then exports to JSON, HTML, CSV, or directly into Burp Suite, OWASP ZAP, and Nessus. Run one command and get deduplicated results from subfinder, amass, crt.sh, SecurityTrails, VirusTotal, and more.
 
 ## Install
 
