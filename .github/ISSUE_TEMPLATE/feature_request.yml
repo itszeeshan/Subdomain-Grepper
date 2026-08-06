@@ -1,0 +1,43 @@
+name: Feature request
+description: Suggest an idea or enhancement for SubdomainX
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        SubdomainX is a reconnaissance tool for **authorized testing only**.
+        We will not accept features whose primary purpose is to enable abuse
+        (e.g. built-in DoS, mass untargeted scanning, or evasion for
+        unauthorized use).
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem / motivation
+      description: What problem would this feature solve? What are you trying to do?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: Describe the feature and how it would work (e.g. new flag, new enumerator, new output format).
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+    validations:
+      required: false
+  - type: checkboxes
+    id: policy
+    attributes:
+      label: Acknowledgements
+      options:
+        - label: I have searched existing issues and this is not a duplicate.
+          required: true
+        - label: This feature is for authorized/lawful security testing use.
+          required: true
+        - label: I have read the [AI Usage Policy](../../AI_USAGE_POLICY.md) and this request is written in my own words.
+          required: true
