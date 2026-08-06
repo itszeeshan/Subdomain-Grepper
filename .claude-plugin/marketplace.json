@@ -1,0 +1,18 @@
+{
+  "name": "subdomainx",
+  "owner": {
+    "name": "Muhammad Zeeshan",
+    "url": "https://github.com/itszeeshan"
+  },
+  "metadata": {
+    "description": "Marketplace for the SubdomainX agent skill.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "subdomainx",
+      "source": "./",
+      "description": "Reference skill that teaches an agent how to use the SubdomainX CLI (flags, API keys, config, output formats). Authorized security testing only."
+    }
+  ]
+}
