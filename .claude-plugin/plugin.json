@@ -1,0 +1,21 @@
+{
+  "name": "subdomainx",
+  "description": "Reference skill for driving the SubdomainX CLI — subdomain enumeration and reconnaissance. Teaches an agent the flags, API keys, config, and output formats. Authorized security testing only.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Muhammad Zeeshan",
+    "url": "https://github.com/itszeeshan"
+  },
+  "homepage": "https://github.com/itszeeshan/subdomainx",
+  "repository": "https://github.com/itszeeshan/subdomainx",
+  "license": "MIT",
+  "keywords": [
+    "subdomain",
+    "enumeration",
+    "reconnaissance",
+    "recon",
+    "security",
+    "bug-bounty",
+    "pentesting"
+  ]
+}
