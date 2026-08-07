@@ -20,6 +20,16 @@ import (
 //go:embed templates/report.html
 var reportTemplateStr string
 
+// The report's CSS and JS live in separate files for maintainability and are
+// composed into report.html as named templates ("styles" and "script") at
+// render time, so the output remains a single self-contained HTML file.
+//
+//go:embed templates/report.css
+var reportCSS string
+
+//go:embed templates/report.js
+var reportJS string
+
 //go:embed templates/logo.png
 var logoPNG []byte
 
@@ -76,8 +86,14 @@ type reportData struct {
 // WriteHTML renders the embedded report template with the scan results and
 // writes it to filename.
 func WriteHTML(filename string, cfg *config.Config, results *types.ScanResults, diffResult *diff.DiffResult) error {
-	tmpl, err := template.New("report").Parse(reportTemplateStr)
-	if err != nil {
+	tmpl := template.New("report")
+	if _, err := tmpl.New("styles").Parse(reportCSS); err != nil {
+		return err
+	}
+	if _, err := tmpl.New("script").Parse(reportJS); err != nil {
+		return err
+	}
+	if _, err := tmpl.Parse(reportTemplateStr); err != nil {
 		return err
 	}
 
