@@ -1,0 +1,97 @@
+        <!-- ── Overview Tab ── -->
+        <div id="tab-overview">
+            <!-- Scan Configuration: full-width band -->
+            <div class="info-card config-band">
+                <div class="orb"></div>
+                <div class="info-card-title">Scan Configuration</div>
+                <div class="config-grid">
+                    <div class="info-row">
+                        <span class="info-key">Scan ID</span>
+                        <span class="info-val" title="{{.ScanID}}">{{.ScanID}}</span>
+                    </div>
+                    {{if .WildcardFile}}
+                    <div class="info-row">
+                        <span class="info-key">Wildcard file</span>
+                        <span class="info-val" title="{{.WildcardFile}}">{{.WildcardFile}}</span>
+                    </div>
+                    {{end}}
+                    <div class="info-row">
+                        <span class="info-key">Threads</span>
+                        <span class="info-val">{{.Threads}}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-key">Timeout</span>
+                        <span class="info-val">{{.Timeout}}s</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-key">Retries</span>
+                        <span class="info-val">{{.Retries}}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-key">Rate limit</span>
+                        <span class="info-val">{{.RateLimit}}/s</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Left: stat cards · Right: tabbed chart panel -->
+            <div class="overview-grid">
+                <div class="stat-col">
+                    <div class="stat-card">
+                        <div class="stat-icon green"><i data-lucide="globe-2" style="width:18px;height:18px"></i></div>
+                        <div class="stat-number">{{.SubdomainCount}}</div>
+                        <div class="stat-label">Subdomains Found</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon green"><i data-lucide="layers" style="width:18px;height:18px"></i></div>
+                        <div class="stat-number">{{.UniqueDomains}}</div>
+                        <div class="stat-label">Parent Domains</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon green"><i data-lucide="zap" style="width:18px;height:18px"></i></div>
+                        <div class="stat-number">{{.UniqueSources}}</div>
+                        <div class="stat-label">Sources Used</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon orange"><i data-lucide="activity" style="width:18px;height:18px"></i></div>
+                        <div class="stat-number">{{.HTTPCount}}</div>
+                        <div class="stat-label">HTTP Services</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon orange"><i data-lucide="plug" style="width:18px;height:18px"></i></div>
+                        <div class="stat-number">{{.PortCount}}</div>
+                        <div class="stat-label">Hosts with Ports</div>
+                    </div>
+                    {{if .HasScreenshots}}
+                    <div class="stat-card">
+                        <div class="stat-icon green"><i data-lucide="camera" style="width:18px;height:18px"></i></div>
+                        <div class="stat-number">{{.ScreenshotCount}}</div>
+                        <div class="stat-label">Screenshots</div>
+                    </div>
+                    {{end}}
+                    {{if .HasDiff}}
+                    <div class="stat-card" id="diff-stat-card">
+                        <div class="stat-icon red"><i data-lucide="git-compare" style="width:18px;height:18px"></i></div>
+                        <div class="stat-number" id="diff-stat-number">0</div>
+                        <div class="stat-label">Changes Detected</div>
+                    </div>
+                    {{end}}
+                </div>
+
+                <!-- Tabbed breakdown panel -->
+                <div class="info-card chart-panel">
+                    <div class="chart-tabs">
+                        <button class="chart-tab" id="status-chart-card" data-chart="status" style="display:none" onclick="switchChart('status', this)">HTTP Status Codes</button>
+                        <button class="chart-tab" id="tech-chart-card" data-chart="tech" style="display:none" onclick="switchChart('tech', this)">Top Technologies</button>
+                        <button class="chart-tab active" data-chart="source" onclick="switchChart('source', this)">Sources</button>
+                        <button class="chart-tab" data-chart="domain" onclick="switchChart('domain', this)">Domains</button>
+                    </div>
+                    <div class="chart-body">
+                        <div class="chart-pane" data-chart="status" style="display:none"><div class="bar-chart" id="status-bars"></div></div>
+                        <div class="chart-pane" data-chart="tech" style="display:none"><div class="bar-chart" id="tech-bars"></div></div>
+                        <div class="chart-pane" data-chart="source"><div class="bar-chart" id="source-bars"></div></div>
+                        <div class="chart-pane" data-chart="domain" style="display:none"><div class="bar-chart" id="domain-bars"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>

@@ -1,0 +1,37 @@
+<!-- ── Filter Drawer ── -->
+<div class="drawer-backdrop" id="drawer-backdrop" onclick="toggleDrawer(false)"></div>
+<aside class="drawer" id="filter-drawer">
+    <div class="drawer-head">
+        <span class="drawer-title">Filters</span>
+        <button class="drawer-close" onclick="toggleDrawer(false)"><i data-lucide="x" style="width:16px;height:16px"></i></button>
+    </div>
+
+    <button class="filter-toggle" onclick="toggleFilters(this)">
+        <span class="label"><i data-lucide="sliders-horizontal" style="width:14px;height:14px"></i> Refine</span>
+        <i data-lucide="chevron-down" style="width:14px;height:14px" id="filter-chevron"></i>
+    </button>
+
+    <div class="filter-body" id="filter-body">
+        <div class="filter-group" id="domain-filter-group">
+            <div class="filter-group-title">Parent Domain</div>
+            <div class="checkbox-list" id="domain-checkboxes"></div>
+        </div>
+
+        <div class="filter-group" id="source-filter-group">
+            <div class="filter-group-title">Source</div>
+            <div class="checkbox-list" id="source-checkboxes"></div>
+        </div>
+
+        <div class="filter-group" id="status-filter-group" style="display:none">
+            <div class="filter-group-title">Status Code</div>
+            <div class="checkbox-list" id="status-checkboxes"></div>
+        </div>
+
+        <div class="filter-group" id="tech-filter-group" style="display:none">
+            <div class="filter-group-title">Technology</div>
+            <div class="checkbox-list" id="tech-checkboxes"></div>
+        </div>
+
+        <button class="btn-clear" onclick="clearFilters()">Clear All Filters</button>
+    </div>
+</aside>

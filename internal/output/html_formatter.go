@@ -1,7 +1,7 @@
 package output
 
 import (
-	_ "embed"
+	"embed"
 	"encoding/base64"
 	"encoding/json"
 	"html/template"
@@ -17,18 +17,13 @@ import (
 	"github.com/itszeeshan/subdomainx/v2/internal/types"
 )
 
-//go:embed templates/report.html
-var reportTemplateStr string
-
-// The report's CSS and JS live in separate files for maintainability and are
-// composed into report.html as named templates ("styles" and "script") at
-// render time, so the output remains a single self-contained HTML file.
+// The report is authored as many small files — one concern each — under
+// templates/{css,js,partials}, plus the report.html index that composes them.
+// They are parsed into a single template set and rendered to one
+// self-contained HTML file, so the split is source-only.
 //
-//go:embed templates/report.css
-var reportCSS string
-
-//go:embed templates/report.js
-var reportJS string
+//go:embed templates/report.html templates/css/*.css templates/js/*.js templates/partials/*.html
+var templateFS embed.FS
 
 //go:embed templates/logo.png
 var logoPNG []byte
@@ -86,14 +81,16 @@ type reportData struct {
 // WriteHTML renders the embedded report template with the scan results and
 // writes it to filename.
 func WriteHTML(filename string, cfg *config.Config, results *types.ScanResults, diffResult *diff.DiffResult) error {
-	tmpl := template.New("report")
-	if _, err := tmpl.New("styles").Parse(reportCSS); err != nil {
-		return err
-	}
-	if _, err := tmpl.New("script").Parse(reportJS); err != nil {
-		return err
-	}
-	if _, err := tmpl.Parse(reportTemplateStr); err != nil {
+	// Parse the index plus every css/js/partial into one template set; each
+	// file becomes a template named by its base name (e.g. "rail.html",
+	// "tables.css", "charts.js") that report.html pulls in via {{template}}.
+	tmpl, err := template.New("report.html").ParseFS(templateFS,
+		"templates/report.html",
+		"templates/css/*.css",
+		"templates/js/*.js",
+		"templates/partials/*.html",
+	)
+	if err != nil {
 		return err
 	}
 
@@ -159,7 +156,7 @@ func WriteHTML(filename string, cfg *config.Config, results *types.ScanResults, 
 	}
 	defer func() { _ = file.Close() }()
 
-	return tmpl.Execute(file, data)
+	return tmpl.ExecuteTemplate(file, "report.html", data)
 }
 
 // computeStats returns domain and source breakdown sorted by count descending.

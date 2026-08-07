@@ -1,0 +1,144 @@
+/* Screenshots grid */
+.screenshot-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    padding: 20px;
+}
+.screenshot-grid.list-view {
+    grid-template-columns: 1fr;
+}
+.screenshot-card {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    transition: transform .15s, box-shadow .15s, border-color .15s;
+}
+.screenshot-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border-color: var(--border-2);
+}
+.screenshot-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+    background: #0e0e10;
+}
+.screenshot-card.list-view img { height: 120px; }
+.screenshot-card-body {
+    padding: 12px 14px;
+}
+.screenshot-card-title {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.screenshot-card-url {
+    font-size: 11px;
+    color: var(--lime);
+    text-decoration: none;
+    display: block;
+    margin-top: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.screenshot-card-url:hover { text-decoration: underline; }
+.ss-img { cursor: zoom-in; }
+
+/* Screenshot lightbox */
+.lightbox {
+    position: fixed; inset: 0; z-index: 100;
+    display: none; align-items: center; justify-content: center;
+    background: rgba(0,0,0,0.82);
+    padding: 40px;
+}
+.lightbox.open { display: flex; }
+.lightbox-inner {
+    position: relative;
+    background: var(--surface);
+    border-radius: 20px;
+    width: 100%;
+    max-width: 1100px;
+    max-height: 90vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+}
+.lightbox-inner img {
+    width: 100%;
+    max-height: 76vh;
+    object-fit: contain;
+    background: #0e0e10;
+    display: block;
+}
+.lightbox-caption {
+    padding: 16px 20px;
+    display: flex; flex-direction: column; gap: 4px;
+    border-top: 1px solid var(--border);
+}
+.lightbox-title { font-size: 15px; font-weight: 700; color: var(--text); }
+.lightbox-url { font-size: 12.5px; color: var(--lime); text-decoration: none; word-break: break-all; }
+.lightbox-url:hover { text-decoration: underline; }
+.lightbox-close {
+    position: absolute; top: 12px; right: 12px;
+    width: 38px; height: 38px; border-radius: 50%;
+    border: none; background: rgba(0,0,0,0.55); color: #fff;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    z-index: 2;
+}
+.lightbox-close:hover { background: rgba(0,0,0,0.8); }
+
+/* Diff changes */
+.diff-section { padding: 20px; }
+.diff-group { margin-bottom: 20px; }
+.diff-group-title {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.diff-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.diff-item {
+    padding: 8px 14px;
+    border-radius: var(--radius-xs);
+    font-size: 13px;
+    font-family: monospace;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.diff-item.added { background: var(--lime-dim);   color: var(--lime); }
+.diff-item.removed { background: var(--red-dim);  color: var(--red); }
+.diff-item.changed { background: var(--orange-dim); color: var(--orange); }
+.diff-item .prefix { font-weight: 700; min-width: 14px; }
+.diff-ips { font-size: 11px; color: var(--text-3); margin-left: auto; font-family: monospace; }
+/* View toggle */
+.view-toggle { display: flex; gap: 2px; background: var(--surface-2); border-radius: var(--radius-xs); padding: 3px; }
+.view-toggle button {
+    padding: 5px 11px;
+    border: none;
+    border-radius: 8px;
+    background: none;
+    cursor: pointer;
+    color: var(--text-2);
+    font-size: 11px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.view-toggle button.active { background: var(--lime); color: #0b0b0d; }

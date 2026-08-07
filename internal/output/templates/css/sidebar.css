@@ -1,0 +1,162 @@
+/* collapsible filter section */
+.filter-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 12px;
+    border-radius: var(--radius-xs);
+    cursor: pointer;
+    color: var(--text-2);
+    font-size: 13px;
+    font-weight: 600;
+    background: none;
+    border: none;
+    width: 100%;
+    margin-top: 16px;
+}
+.filter-toggle:hover { background: var(--surface-3); color: var(--text); }
+.filter-toggle .label { display: flex; align-items: center; gap: 8px; }
+.filter-body { padding: 4px 0 0; }
+.filter-body.hidden { display: none; }
+
+.filter-group { margin-bottom: 14px; padding: 0 4px; }
+.filter-group-title { font-size: 11px; font-weight: 600; color: var(--text-3); margin-bottom: 6px; text-transform: uppercase; letter-spacing: .06em; }
+
+.search-box {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--border-2);
+    border-radius: var(--radius-xs);
+    background: var(--surface-2);
+    font-size: 12.5px;
+    color: var(--text);
+    outline: none;
+    transition: border-color .15s;
+}
+.search-box:focus { border-color: var(--lime); }
+.search-box::placeholder { color: var(--text-3); }
+
+.checkbox-list { display: flex; flex-direction: column; gap: 5px; max-height: 160px; overflow-y: auto; }
+.checkbox-item { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(--text-2); cursor: pointer; }
+.checkbox-item input[type=checkbox] { accent-color: var(--lime); width: 13px; height: 13px; cursor: pointer; }
+.checkbox-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
+
+.btn-clear {
+    width: 100%;
+    padding: 8px;
+    border-radius: var(--radius-xs);
+    border: 1px solid var(--border-2);
+    background: none;
+    font-size: 12px;
+    color: var(--lime);
+    cursor: pointer;
+    font-weight: 600;
+    margin-top: 8px;
+    transition: background .15s;
+}
+.btn-clear:hover { background: var(--lime-dim); }
+/* Icon rail — blends into the page (no surface, no border) */
+.rail {
+    width: 84px;
+    flex-shrink: 0;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 22px 0 28px;
+    gap: 10px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    /* Lift the rail into its own stacking context so hover tooltips
+       paint above page content (sticky table headers, cards, etc.). */
+    z-index: 55;
+}
+.rail-logo {
+    width: 46px; height: 46px;
+    background: transparent;
+    color: var(--lime);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 16px;
+}
+.rail-logo img { width: 46px; height: 46px; border-radius: 12px; object-fit: contain; }
+.rail-logo i { width: 26px; height: 26px; }
+.rail-nav { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.rail-btn {
+    position: relative;
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    border: none;
+    background: var(--surface-2);
+    color: var(--text-2);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .15s, color .15s;
+}
+/* Hover tooltip to the right of each rail button */
+.rail-btn[data-tip]::after {
+    content: attr(data-tip);
+    position: absolute;
+    left: calc(100% + 12px);
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--surface-3);
+    color: var(--text);
+    padding: 6px 11px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .15s;
+    z-index: 70;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.45);
+}
+.rail-btn[data-tip]:hover::after { opacity: 1; }
+.rail-btn:hover { background: var(--surface-3); color: var(--text); }
+.rail-btn.active { background: var(--lime); color: #0b0b0d; }
+.rail-btn i { width: 20px; height: 20px; }
+.rail-dot {
+    position: absolute; top: 9px; right: 9px;
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--lime);
+    border: 2px solid var(--bg);
+}
+.rail-btn.active .rail-dot { border-color: var(--lime); }
+.rail-dot.danger { background: var(--red); }
+/* Filter drawer */
+.drawer {
+    position: fixed;
+    top: 0; right: 0;
+    height: 100vh;
+    width: 300px;
+    z-index: 60;
+    background: var(--surface);
+    border-left: 1px solid var(--border);
+    box-shadow: -24px 0 48px rgba(0,0,0,0.45);
+    transform: translateX(100%);
+    transition: transform .2s ease;
+    padding: 22px 18px;
+    overflow-y: auto;
+}
+.drawer.open { transform: translateX(0); }
+.drawer-head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 14px;
+}
+.drawer-title { font-size: 16px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; color: var(--text); }
+.drawer-close {
+    width: 32px; height: 32px; border-radius: 10px;
+    border: none; background: var(--surface-2); color: var(--text-2);
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+}
+.drawer-close:hover { background: var(--surface-3); color: var(--text); }
+.drawer-backdrop {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 59;
+    opacity: 0; pointer-events: none;
+    transition: opacity .2s;
+}
+.drawer-backdrop.open { opacity: 1; pointer-events: auto; }

@@ -1,0 +1,17 @@
+        <!-- ── Screenshots Tab ── -->
+        {{if .HasScreenshots}}
+        <div id="tab-screenshots" class="section-hidden">
+            <div class="panel">
+                <div class="panel-header">
+                    <div class="panel-actions">
+                        <div class="view-toggle">
+                            <button class="active" onclick="setScreenshotView('grid', this)"><i data-lucide="grid-3x3" style="width:12px;height:12px"></i> Grid</button>
+                            <button onclick="setScreenshotView('list', this)"><i data-lucide="list" style="width:12px;height:12px"></i> List</button>
+                        </div>
+                        <button class="btn-sm" onclick="screenshotAll()" title="Open all URLs in new tabs"><i data-lucide="external-link" style="width:12px;height:12px"></i> Open All URLs</button>
+                    </div>
+                </div>
+                <div class="screenshot-grid" id="screenshot-grid"></div>
+            </div>
+        </div>
+        {{end}}

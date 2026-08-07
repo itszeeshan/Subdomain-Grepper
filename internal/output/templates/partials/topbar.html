@@ -1,0 +1,17 @@
+        <header class="topbar">
+            <div>
+                <h1 class="page-title" id="page-title">Overview</h1>
+            </div>
+            <div class="topbar-actions">
+                <div class="date-label" id="date-label"><i data-lucide="calendar"></i> <span class="muted">Generated:</span> <strong>{{.GeneratedAt}}</strong></div>
+                <button class="pill" id="filters-pill" style="display:none" onclick="toggleDrawer()"><i data-lucide="sliders-horizontal"></i> Filters</button>
+            </div>
+        </header>
+
+        <!-- Table toolbar (search) — shown on table tabs only -->
+        <div class="table-toolbar" id="table-toolbar" style="display:none">
+            <div class="table-search">
+                <i data-lucide="search"></i>
+                <input id="search-input" type="text" placeholder="Filter subdomains..." oninput="applyFilters()">
+            </div>
+        </div>

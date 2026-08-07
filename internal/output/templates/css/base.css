@@ -1,0 +1,42 @@
+/* ── Dark dashboard theme ──
+   Palette and radii live here so the whole report can be re-tinted
+   from one place. Inspired by lime/orange-on-black dashboard UIs. */
+:root {
+    --bg:          #0b0b0d;
+    --surface:     #161618;   /* cards */
+    --surface-2:   #1e1e22;   /* nav pills, inputs */
+    --surface-3:   #26262b;   /* hover / active chips */
+    --border:      rgba(255,255,255,0.07);
+    --border-2:    rgba(255,255,255,0.12);
+    --text:        #fafafa;
+    --text-2:      #a1a1aa;
+    --text-3:      #71717a;
+    --lime:        #b4f461;   /* primary accent */
+    --lime-dim:    rgba(180,244,97,0.14);
+    --orange:      #f97316;   /* secondary accent */
+    --orange-dim:  rgba(249,115,22,0.16);
+    --amber:       #fbbf24;
+    --red:         #f87171;
+    --red-dim:     rgba(248,113,113,0.15);
+    --radius:      22px;
+    --radius-sm:   14px;
+    --radius-xs:   10px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    min-height: 100vh;
+    color: var(--text);
+}
+
+/* ── Layout ── */
+.shell { display: flex; min-height: 100vh; }
+.main {
+    flex: 1;
+    padding: 32px 28px;
+    min-width: 0;
+}
+.section-hidden { display: none; }

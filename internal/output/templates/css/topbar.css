@@ -1,0 +1,38 @@
+.topbar {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+}
+.page-title {
+    font-size: 40px;
+    font-weight: 800;
+    letter-spacing: .01em;
+    text-transform: uppercase;
+    color: var(--text);
+    line-height: 1;
+}
+.topbar-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.pill {
+    display: flex; align-items: center; gap: 8px;
+    padding: 11px 18px;
+    border-radius: 999px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .15s, border-color .15s;
+}
+.pill:hover { background: var(--surface-3); }
+.pill i { width: 15px; height: 15px; color: var(--text-2); }
+.pill .muted { color: var(--text-3); font-weight: 500; }
+
+/* Plain generated-date text (not a button/card) */
+.date-label { display: flex; align-items: center; gap: 8px; color: var(--text-2); font-size: 13px; font-weight: 600; }
+.date-label i, .date-label svg { width: 15px; height: 15px; color: var(--text-3); }
+.date-label .muted { color: var(--text-3); font-weight: 500; }
+.date-label strong { color: var(--text); font-weight: 700; }

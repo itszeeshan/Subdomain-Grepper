@@ -1,0 +1,37 @@
+        <!-- ── HTTP Services Tab ── -->
+        <div id="tab-http" class="section-hidden">
+            <div class="panel">
+                <div class="panel-header">
+                    <span class="panel-count" id="http-count-badge" style="display:none">{{.HTTPCount}} total</span>
+                    <div class="panel-actions">
+                        <button class="btn-sm" onclick="exportData('http','csv')"><i data-lucide="download" style="width:12px;height:12px"></i> CSV</button>
+                        <button class="btn-sm" onclick="exportData('http','json')"><i data-lucide="file-json" style="width:12px;height:12px"></i> JSON</button>
+                    </div>
+                </div>
+                {{if gt .HTTPCount 0}}
+                <div style="overflow-x:auto">
+                    <table id="http-table">
+                        <thead>
+                            <tr>
+                                <th onclick="sortTable('http','url')">URL <span class="sort-arrow" id="sort-http-url"></span></th>
+                                <th onclick="sortTable('http','status')">Status <span class="sort-arrow" id="sort-http-status"></span></th>
+                                <th onclick="sortTable('http','title')">Title <span class="sort-arrow" id="sort-http-title"></span></th>
+                                <th onclick="sortTable('http','contentLength')">Length <span class="sort-arrow" id="sort-http-contentLength"></span></th>
+                                <th onclick="sortTable('http','technologies')">Technologies <span class="sort-arrow" id="sort-http-technologies"></span></th>
+                            </tr>
+                        </thead>
+                        <tbody id="http-tbody"></tbody>
+                    </table>
+                </div>
+                <div class="pagination">
+                    <span class="pagination-info" id="http-info"></span>
+                    <div class="pag-buttons">
+                        <button class="pag-btn" id="http-prev" onclick="httpPage(-1)">Previous</button>
+                        <button class="pag-btn" id="http-next" onclick="httpPage(1)">Next</button>
+                    </div>
+                </div>
+                {{else}}
+                <div class="empty-state">No HTTP results. Run with <code>--httpx</code> to probe live hosts.</div>
+                {{end}}
+            </div>
+        </div>

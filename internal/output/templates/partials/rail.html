@@ -1,0 +1,23 @@
+    <aside class="rail">
+        <div class="rail-logo">
+            {{if .LogoDataURI}}<img src="{{.LogoDataURI}}" alt="SubdomainX">{{else}}<i data-lucide="search"></i>{{end}}
+        </div>
+        <nav class="rail-nav">
+            <button class="rail-btn active" onclick="showTab('overview')" id="nav-overview" data-tip="Overview" aria-label="Overview"><i data-lucide="layout-dashboard"></i></button>
+            <button class="rail-btn" onclick="showTab('subdomains')" id="nav-subdomains" data-tip="Subdomains" aria-label="Subdomains"><i data-lucide="globe-2"></i></button>
+            <button class="rail-btn" onclick="showTab('http')" id="nav-http" data-tip="HTTP Services" aria-label="HTTP Services"><i data-lucide="activity"></i></button>
+            <button class="rail-btn" onclick="showTab('ports')" id="nav-ports" data-tip="Port Results" aria-label="Port Results"><i data-lucide="plug"></i></button>
+            {{if .HasScreenshots}}
+            <button class="rail-btn" onclick="showTab('screenshots')" id="nav-screenshots" data-tip="Screenshots" aria-label="Screenshots"><i data-lucide="camera"></i><span class="rail-dot"></span></button>
+            {{end}}
+            {{if .HasWayback}}
+            <button class="rail-btn" onclick="showTab('wayback')" id="nav-wayback" data-tip="Wayback URLs" aria-label="Wayback URLs"><i data-lucide="history"></i><span class="rail-dot"></span></button>
+            {{end}}
+            {{if .HasTakeover}}
+            <button class="rail-btn" onclick="showTab('takeover')" id="nav-takeover" data-tip="Takeover Risks" aria-label="Takeover Risks"><i data-lucide="alert-triangle"></i><span class="rail-dot danger"></span></button>
+            {{end}}
+            {{if .HasDiff}}
+            <button class="rail-btn" onclick="showTab('changes')" id="nav-changes" data-tip="Changes" aria-label="Changes"><i data-lucide="git-compare"></i></button>
+            {{end}}
+        </nav>
+    </aside>

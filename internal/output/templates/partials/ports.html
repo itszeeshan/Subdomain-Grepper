@@ -1,0 +1,38 @@
+        <!-- ── Port Results Tab ── -->
+        <div id="tab-ports" class="section-hidden">
+            <div class="panel">
+                <div class="panel-header">
+                    <div class="panel-actions">
+                        <button class="btn-sm" onclick="exportData('ports','csv')"><i data-lucide="download" style="width:12px;height:12px"></i> CSV</button>
+                        <button class="btn-sm" onclick="exportData('ports','json')"><i data-lucide="file-json" style="width:12px;height:12px"></i> JSON</button>
+                    </div>
+                </div>
+                {{if gt .PortCount 0}}
+                <div style="overflow-x:auto">
+                    <table id="ports-table">
+                        <thead>
+                            <tr>
+                                <th onclick="sortTable('ports','host')">Host <span class="sort-arrow" id="sort-ports-host"></span></th>
+                                <th onclick="sortTable('ports','ip')">IP <span class="sort-arrow" id="sort-ports-ip"></span></th>
+                                <th onclick="sortTable('ports','port')">Port <span class="sort-arrow" id="sort-ports-port"></span></th>
+                                <th onclick="sortTable('ports','protocol')">Protocol <span class="sort-arrow" id="sort-ports-protocol"></span></th>
+                                <th onclick="sortTable('ports','state')">State <span class="sort-arrow" id="sort-ports-state"></span></th>
+                                <th onclick="sortTable('ports','service')">Service <span class="sort-arrow" id="sort-ports-service"></span></th>
+                                <th onclick="sortTable('ports','version')">Version <span class="sort-arrow" id="sort-ports-version"></span></th>
+                            </tr>
+                        </thead>
+                        <tbody id="ports-tbody"></tbody>
+                    </table>
+                </div>
+                <div class="pagination">
+                    <span class="pagination-info" id="ports-info"></span>
+                    <div class="pag-buttons">
+                        <button class="pag-btn" id="ports-prev" onclick="portsPage(-1)">Previous</button>
+                        <button class="pag-btn" id="ports-next" onclick="portsPage(1)">Next</button>
+                    </div>
+                </div>
+                {{else}}
+                <div class="empty-state">No port results. Run with <code>--smap</code> to scan ports.</div>
+                {{end}}
+            </div>
+        </div>

@@ -1,0 +1,11 @@
+<!-- ── Screenshot Lightbox ── -->
+<div class="lightbox" id="lightbox" onclick="if(event.target===this)closeLightbox()">
+    <div class="lightbox-inner">
+        <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close"><i data-lucide="x" style="width:18px;height:18px"></i></button>
+        <img id="lightbox-img" src="" alt="Screenshot">
+        <div class="lightbox-caption">
+            <div class="lightbox-title" id="lightbox-title"></div>
+            <a class="lightbox-url" id="lightbox-url" href="" target="_blank" rel="noopener"></a>
+        </div>
+    </div>
+</div>

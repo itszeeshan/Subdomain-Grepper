@@ -1,0 +1,39 @@
+        <!-- ── Wayback URLs Tab ── -->
+        {{if .HasWayback}}
+        <div id="tab-wayback" class="section-hidden">
+            <div class="panel">
+                <div class="panel-header">
+                    <span class="panel-count" id="wayback-count-badge" style="display:none">{{.WaybackCount}} URLs</span>
+                    <div class="panel-actions">
+                        <div class="filter-group" style="margin:0;padding:0">
+                            <select id="wayback-domain-filter" onchange="renderWayback()" style="padding:5px 10px;border-radius:8px;border:1px solid rgba(255,255,255,0.12);font-size:11px;color:#a1a1aa;background:#1e1e22;cursor:pointer">
+                                <option value="">All Domains</option>
+                            </select>
+                        </div>
+                        <input class="search-box" id="wayback-search" type="text" placeholder="Filter URLs..." oninput="renderWayback()" style="width:180px;padding:5px 10px;font-size:11px">
+                        <button class="btn-sm" onclick="exportData('wayback','csv')"><i data-lucide="download" style="width:12px;height:12px"></i> CSV</button>
+                        <button class="btn-sm" onclick="exportData('wayback','json')"><i data-lucide="file-json" style="width:12px;height:12px"></i> JSON</button>
+                    </div>
+                </div>
+                <div style="overflow-x:auto">
+                    <table id="wayback-table">
+                        <thead>
+                            <tr>
+                                <th onclick="sortTable('wayback','subdomain')">Subdomain <span class="sort-arrow" id="sort-wayback-subdomain"></span></th>
+                                <th onclick="sortTable('wayback','domain')">Domain <span class="sort-arrow" id="sort-wayback-domain"></span></th>
+                                <th onclick="sortTable('wayback','url')">URL <span class="sort-arrow" id="sort-wayback-url"></span></th>
+                            </tr>
+                        </thead>
+                        <tbody id="wayback-tbody"></tbody>
+                    </table>
+                </div>
+                <div class="pagination">
+                    <span class="pagination-info" id="wayback-info"></span>
+                    <div class="pag-buttons">
+                        <button class="pag-btn" id="wayback-prev" onclick="waybackPage(-1)">Previous</button>
+                        <button class="pag-btn" id="wayback-next" onclick="waybackPage(1)">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{end}}

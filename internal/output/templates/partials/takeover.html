@@ -1,0 +1,28 @@
+        <!-- ── Takeover Tab ── -->
+        {{if .HasTakeover}}
+        <div id="tab-takeover" class="section-hidden">
+            <div class="panel">
+                <div class="panel-header">
+                    <span class="panel-count" style="background:rgba(248,113,113,0.15);color:#f87171">{{.TakeoverCount}} vulnerabilities</span>
+                    <div class="panel-actions">
+                        <button class="btn-sm" onclick="exportData('takeover','csv')"><i data-lucide="download" style="width:12px;height:12px"></i> CSV</button>
+                        <button class="btn-sm" onclick="exportData('takeover','json')"><i data-lucide="file-json" style="width:12px;height:12px"></i> JSON</button>
+                    </div>
+                </div>
+                <div style="overflow-x:auto">
+                    <table id="takeover-table">
+                        <thead>
+                            <tr>
+                                <th onclick="sortTable('takeover','risk')">Risk <span class="sort-arrow" id="sort-takeover-risk"></span></th>
+                                <th onclick="sortTable('takeover','subdomain')">Subdomain <span class="sort-arrow" id="sort-takeover-subdomain"></span></th>
+                                <th onclick="sortTable('takeover','cname')">CNAME <span class="sort-arrow" id="sort-takeover-cname"></span></th>
+                                <th onclick="sortTable('takeover','service')">Service <span class="sort-arrow" id="sort-takeover-service"></span></th>
+                                <th>Evidence</th>
+                            </tr>
+                        </thead>
+                        <tbody id="takeover-tbody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {{end}}
