@@ -75,7 +75,7 @@ subdomainx --subfinder --httpx --format burp example.com   # Also: zap, nessus, 
 **Checkpointing** — Resume interrupted scans with `--resume`
 
 <div align="center">
-  <img src="docs/public/dashboard.png" alt="SubdomainX HTML Dashboard" width="800"/>
+  <img src="docs/public/ui_dashboard.gif" alt="SubdomainX HTML Dashboard" width="800"/>
   <p><em>Interactive HTML report</em></p>
 </div>
 <div align="center">
