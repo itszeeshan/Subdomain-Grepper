@@ -9,7 +9,6 @@
 
 [![Go Version](https://img.shields.io/badge/Go-1.21+-blue.svg)](https://golang.org)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Go Report Card](https://goreportcard.com/badge/github.com/itszeeshan/subdomainx)](https://goreportcard.com/report/github.com/itszeeshan/subdomainx)
 [![Go Reference](https://pkg.go.dev/badge/github.com/itszeeshan/subdomainx.svg)](https://pkg.go.dev/github.com/itszeeshan/subdomainx)
 [![GitHub release](https://img.shields.io/github/release/itszeeshan/subdomainx.svg)](https://github.com/itszeeshan/subdomainx/releases)
 [![GitHub stars](https://img.shields.io/github/stars/itszeeshan/subdomainx.svg)](https://github.com/itszeeshan/subdomainx/stargazers)
