@@ -21,6 +21,8 @@ func showUsage() {
 USAGE:
     subdomainx <domain> [OPTIONS]                    # Single domain scan
     subdomainx --wildcard <domains_file> [OPTIONS]   # Multiple domains scan
+    subdomainx update                                # Update to the latest version
+    subdomainx serve [OPTIONS]                       # Run as a REST API server
 
 REQUIRED (choose one):
     <domain>              Target domain for single domain scan
@@ -31,6 +33,7 @@ OPTIONS:
     --help                 Show this help message
     --check-tools          Check availability of enumeration tools
     --install-tools        Show installation instructions for missing tools
+    update                 Update SubdomainX to the latest version
 
     # Output Options
     --name NAME            Unique name for output files (default: scan)
@@ -131,6 +134,9 @@ EXAMPLES:
 
     # Get installation help
     subdomainx --install-tools
+
+    # Update to the latest version
+    subdomainx update
 
     # Screenshot all HTTP-alive subdomains
     subdomainx --screenshot example.com

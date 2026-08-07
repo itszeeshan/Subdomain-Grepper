@@ -267,3 +267,16 @@ Automatically install all missing tools:
 ```bash
 subdomainx --install-tools
 ```
+
+## Updating SubdomainX
+
+Update an existing installation to the latest release:
+
+```bash
+subdomainx update
+```
+
+This checks GitHub for the latest release and, if a newer version is available,
+reinstalls SubdomainX via `go install`. Requires Go to be installed and
+`$(go env GOPATH)/bin` on your `PATH`. If you're already on the latest version,
+it exits without doing anything.

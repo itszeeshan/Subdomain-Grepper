@@ -30,6 +30,12 @@ go install github.com/itszeeshan/subdomainx/v2@latest
 
 Or [download a pre-built binary](https://github.com/itszeeshan/subdomainx/releases) from the releases page.
 
+Already installed? Update to the latest version with:
+
+```bash
+subdomainx update
+```
+
 ## Usage
 
 ```bash
