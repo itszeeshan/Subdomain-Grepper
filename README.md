@@ -85,15 +85,15 @@ subdomainx --subfinder --httpx --format burp example.com   # Also: zap, nessus, 
 
 ## Documentation
 
-**[subdomainx.vercel.app](https://subdomainx.vercel.app)**
+**[subdomainx.com](https://subdomainx.com)**
 
-- [Installation](https://subdomainx.vercel.app/installation)
-- [CLI Reference](https://subdomainx.vercel.app/cli-reference)
-- [REST API Server](https://subdomainx.vercel.app/api-server)
-- [Examples](https://subdomainx.vercel.app/examples)
-- [Configuration](https://subdomainx.vercel.app/configuration)
-- [Deployment](https://subdomainx.vercel.app/deployment)
-- [Supported Tools](https://subdomainx.vercel.app/supported-tools)
+- [Installation](https://subdomainx.com/installation)
+- [CLI Reference](https://subdomainx.com/cli-reference)
+- [REST API Server](https://subdomainx.com/api-server)
+- [Examples](https://subdomainx.com/examples)
+- [Configuration](https://subdomainx.com/configuration)
+- [Deployment](https://subdomainx.com/deployment)
+- [Supported Tools](https://subdomainx.com/supported-tools)
 
 ## Contributing
 
