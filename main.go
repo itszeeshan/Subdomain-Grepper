@@ -82,7 +82,7 @@ func main() {
 
 	// ---- Early-exit commands ----
 	if *showVersion {
-		fmt.Println("SubdomainX v2.0.0")
+		fmt.Println("SubdomainX v2.1.0")
 		return
 	}
 	if *showHelp {

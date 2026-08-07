@@ -13,7 +13,7 @@ import (
 	"github.com/itszeeshan/subdomainx/v2/internal/utils"
 )
 
-const version = "2.0.0"
+const version = "2.1.0"
 
 func (s *Server) handleHealth(w http.ResponseWriter, r *http.Request) {
 	writeJSON(w, http.StatusOK, HealthResponse{
