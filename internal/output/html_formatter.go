@@ -287,7 +287,7 @@ func buildPortRows(portResults []types.PortResult) template.JS {
 		Service  string `json:"service"`
 		Version  string `json:"version"`
 	}
-	var rows []row
+	rows := make([]row, 0, len(portResults))
 	for _, pr := range portResults {
 		for _, p := range pr.Ports {
 			rows = append(rows, row{

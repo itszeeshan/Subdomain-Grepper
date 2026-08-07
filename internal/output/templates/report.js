@@ -30,11 +30,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (waybackRaw && waybackRaw.length) initWayback();
     if (takeoverData && takeoverData.length) renderTakeover();
     if (diffData) renderDiff();
+
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 });
 
 // ── Tab switching ────────────────────────────────────────────────────────
 function showTab(tab) {
-    const allTabs = ['subdomains','http','ports','screenshots','wayback','takeover','changes'];
+    const allTabs = ['overview','subdomains','http','ports','screenshots','wayback','takeover','changes'];
     allTabs.forEach(t => {
         const el = document.getElementById('tab-' + t);
         const nav = document.getElementById('nav-' + t);
@@ -42,6 +44,26 @@ function showTab(tab) {
         if (nav) nav.classList.toggle('active', t === tab);
     });
     activeTab = tab;
+
+    // Page heading follows the active tab
+    const titles = {
+        overview: 'Overview', subdomains: 'Subdomains', http: 'HTTP Services',
+        ports: 'Port Results', screenshots: 'Screenshots', wayback: 'Wayback URLs',
+        takeover: 'Takeover Risks', changes: 'Changes'
+    };
+    const pt = document.getElementById('page-title');
+    if (pt && titles[tab]) pt.textContent = titles[tab];
+
+    // Filters pill only applies to the filterable table tabs
+    const hasFilters = (tab === 'subdomains' || tab === 'http' || tab === 'ports');
+    const fp = document.getElementById('filters-pill');
+    if (fp) fp.style.display = hasFilters ? '' : 'none';
+    const toolbar = document.getElementById('table-toolbar');
+    if (toolbar) toolbar.style.display = hasFilters ? '' : 'none';
+    // Generated date only belongs on the overview
+    const dl = document.getElementById('date-label');
+    if (dl) dl.style.display = (tab === 'overview') ? '' : 'none';
+    if (!hasFilters) toggleDrawer(false);
 
     const si = document.getElementById('search-input');
     const dg = document.getElementById('domain-filter-group');
@@ -70,6 +92,16 @@ function showTab(tab) {
         filterBody.style.display = 'none'; filterToggle.style.display = 'none';
     }
     if (tab === 'subdomains' || tab === 'http' || tab === 'ports') applyFilters();
+}
+
+// ── Filter drawer (slide-in) ─────────────────────────────────────────────
+function toggleDrawer(force) {
+    const drawer = document.getElementById('filter-drawer');
+    const backdrop = document.getElementById('drawer-backdrop');
+    if (!drawer) return;
+    const open = force === undefined ? !drawer.classList.contains('open') : force;
+    drawer.classList.toggle('open', open);
+    if (backdrop) backdrop.classList.toggle('open', open);
 }
 
 // ── Filter panel toggle ──────────────────────────────────────────────────
@@ -230,7 +262,7 @@ function techBadges(techStr, detectedTech) {
         }).join(' ');
     }
     // Fallback to basic technologies string
-    if (!techStr || techStr === 'N/A') return '<span style="color:#b8aed0">N/A</span>';
+    if (!techStr || techStr === 'N/A') return '<span style="color:#71717a">N/A</span>';
     return techStr.split(',').map(t => t.trim()).filter(Boolean).map(t => '<span class="badge badge-tech">' + esc(t) + '</span>').join(' ');
 }
 
@@ -251,7 +283,7 @@ function renderSubdomains() {
         '<tr><td><a class="link" href="https://' + esc(s.subdomain) + '" target="_blank"><strong>' + esc(s.subdomain) + '</strong></a></td>' +
         '<td><span class="badge badge-source">' + esc(s.parent) + '</span></td>' +
         '<td>' + s.source.split(',').map(src => '<span class="badge badge-source">' + esc(src.trim()) + '</span>').join(' ') + '</td>' +
-        '<td>' + (s.ips === 'N/A' ? '<span style="color:#b8aed0">N/A</span>' : s.ips.split(', ').map(ip => '<span class="badge badge-ip">' + esc(ip) + '</span>').join(' ')) + '</td></tr>'
+        '<td>' + (s.ips === 'N/A' ? '<span style="color:#71717a">N/A</span>' : s.ips.split(', ').map(ip => '<span class="badge badge-ip">' + esc(ip) + '</span>').join(' ')) + '</td></tr>'
     ).join('');
     setPagination(subPage, filteredSubdomains.length, 'subdomains-info', 'subdomain-prev', 'subdomain-next');
 }
@@ -327,12 +359,25 @@ function renderScreenshots() {
     if (!grid || !screenshots.length) return;
     grid.innerHTML = screenshots.map(s =>
         '<div class="screenshot-card">' +
-        '<img src="' + esc(s.filename) + '" alt="' + esc(s.subdomain) + '" loading="lazy" onerror="this.alt=\'Screenshot not available\';this.style.height=\'80px\';this.style.objectFit=\'contain\';this.style.padding=\'20px\';this.style.color=\'#b8aed0\';this.style.fontSize=\'12px\'">' +
+        '<img class="ss-img" src="' + esc(s.filename) + '" data-sub="' + esc(s.subdomain) + '" data-url="' + esc(s.url) + '" alt="' + esc(s.subdomain) + '" loading="lazy" onclick="openLightbox(this)" onerror="this.alt=\'Screenshot not available\';this.style.height=\'80px\';this.style.objectFit=\'contain\';this.style.padding=\'20px\';this.style.color=\'#71717a\';this.style.fontSize=\'12px\'">' +
         '<div class="screenshot-card-body">' +
         '<div class="screenshot-card-title">' + esc(s.subdomain) + '</div>' +
         '<a class="screenshot-card-url" href="' + esc(s.url) + '" target="_blank">' + esc(s.url) + '</a>' +
         '</div></div>'
     ).join('');
+}
+
+// ── Screenshot lightbox ──────────────────────────────────────────────────
+function openLightbox(img) {
+    document.getElementById('lightbox-img').src = img.src;
+    document.getElementById('lightbox-title').textContent = img.getAttribute('data-sub') || '';
+    const a = document.getElementById('lightbox-url');
+    const u = img.getAttribute('data-url') || '';
+    a.href = u; a.textContent = u;
+    document.getElementById('lightbox').classList.add('open');
+}
+function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
 }
 
 function setScreenshotView(view, btn) {
@@ -469,39 +514,55 @@ function renderTakeover() {
     const riskOrder = { high: 0, medium: 1, low: 2 };
     currentTakeover.sort((a, b) => (riskOrder[a.risk] || 3) - (riskOrder[b.risk] || 3));
     tbody.innerHTML = currentTakeover.map(r => {
-        const riskColors = { high: '#dc2626', medium: '#ea580c', low: '#ca8a04' };
-        const riskBg = { high: 'rgba(239,68,68,0.1)', medium: 'rgba(234,88,12,0.1)', low: 'rgba(202,138,4,0.1)' };
+        const riskColors = { high: '#f87171', medium: '#f97316', low: '#fbbf24' };
+        const riskBg = { high: 'rgba(248,113,113,0.15)', medium: 'rgba(249,115,22,0.16)', low: 'rgba(251,191,36,0.15)' };
         return '<tr>' +
             '<td><span style="display:inline-block;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:600;color:' + (riskColors[r.risk]||'#666') + ';background:' + (riskBg[r.risk]||'#eee') + '">' + esc(r.risk.toUpperCase()) + '</span></td>' +
             '<td><strong>' + esc(r.subdomain) + '</strong></td>' +
             '<td>' + esc(r.cname || 'N/A') + '</td>' +
             '<td><span class="badge badge-source">' + esc(r.service) + '</span></td>' +
-            '<td style="font-size:12px;color:#7c6f9a">' + esc(r.evidence) + '</td>' +
+            '<td style="font-size:12px;color:#a1a1aa">' + esc(r.evidence) + '</td>' +
             '</tr>';
     }).join('');
 }
 
 // ── Bar charts ────────────────────────────────────────────────────────────
 function buildBarCharts() {
-    renderBars('source-bars', sourceStats.slice(0, 8));
-    renderBars('domain-bars', domainStats.slice(0, 8));
+    renderBars('source-bars', sourceStats.slice(0, 12));
+    renderBars('domain-bars', domainStats.slice(0, 12));
 
-    // Status code chart
+    let defaultChart = 'source';
+
+    // Status code chart — vertical bars; reveal its tab and default to it
     if (statusStats && statusStats.length) {
         document.getElementById('status-chart-card').style.display = '';
-        renderColorBars('status-bars', statusStats);
+        renderVerticalBars('status-bars', statusStats);
+        defaultChart = 'status';
     }
 
-    // Technology chart
+    // Technology chart — reveal its tab
     if (techStats && techStats.length) {
         document.getElementById('tech-chart-card').style.display = '';
-        renderBars('tech-bars', techStats.slice(0, 8));
+        renderBars('tech-bars', techStats.slice(0, 10));
     }
+
+    // Activate the default breakdown tab
+    const btn = document.querySelector('.chart-tab[data-chart="' + defaultChart + '"]');
+    switchChart(defaultChart, btn);
+}
+
+// ── Breakdown panel tab switching ─────────────────────────────────────────
+function switchChart(name, btn) {
+    document.querySelectorAll('.chart-pane').forEach(p => {
+        p.style.display = p.getAttribute('data-chart') === name ? '' : 'none';
+    });
+    document.querySelectorAll('.chart-tab').forEach(t => t.classList.remove('active'));
+    if (btn) btn.classList.add('active');
 }
 
 function renderBars(containerId, data) {
     const el = document.getElementById(containerId);
-    if (!el || !data.length) { el && (el.innerHTML = '<span style="color:#b8aed0;font-size:12px">No data</span>'); return; }
+    if (!el || !data.length) { el && (el.innerHTML = '<span style="color:#71717a;font-size:12px">No data</span>'); return; }
     const max = data[0].count;
     el.innerHTML = data.map(d =>
         '<div class="bar-row">' +
@@ -509,6 +570,25 @@ function renderBars(containerId, data) {
         '<div class="bar-track"><div class="bar-fill" style="width:' + Math.round(d.count / max * 100) + '%"></div></div>' +
         '</div>'
     ).join('');
+}
+
+// Vertical bar chart (used for HTTP status codes).
+function renderVerticalBars(containerId, data) {
+    const el = document.getElementById(containerId);
+    if (!el || !data.length) { el && (el.innerHTML = '<span style="color:#71717a;font-size:12px">No data</span>'); return; }
+    const max = Math.max(...data.map(d => d.count));
+    el.className = 'vbar-chart';
+    el.innerHTML = data.map(d => {
+        let cls = '';
+        if (d.name.startsWith('2xx')) cls = 'green';
+        else if (d.name.startsWith('3xx')) cls = 'orange';
+        else if (d.name.startsWith('4xx') || d.name.startsWith('5xx')) cls = 'red';
+        const h = Math.max(6, Math.round(d.count / max * 100));
+        return '<div class="vbar">' +
+            '<div class="vbar-track"><div class="vbar-col ' + cls + '" style="height:' + h + '%">' +
+            '<span class="vbar-value">' + d.count + '</span></div></div>' +
+            '<span class="vbar-label">' + esc(d.name) + '</span></div>';
+    }).join('');
 }
 
 function renderColorBars(containerId, data) {

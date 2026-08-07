@@ -12,142 +12,155 @@
 <body>
 <div class="shell">
 
-    <!-- ── Sidebar ── -->
-    <aside class="sidebar">
-        <div class="logo">
-            {{if .LogoDataURI}}<img src="{{.LogoDataURI}}" alt="SubdomainX" style="height:36px;border-radius:8px">{{else}}<div class="logo-icon"><i data-lucide="search" style="width:18px;height:18px"></i></div>{{end}}
+    <!-- ── Icon Rail ── -->
+    <aside class="rail">
+        <div class="rail-logo">
+            {{if .LogoDataURI}}<img src="{{.LogoDataURI}}" alt="SubdomainX">{{else}}<i data-lucide="search"></i>{{end}}
         </div>
-
-        <div class="nav-section">
-            <div class="nav-label">Views</div>
-            <button class="nav-item active" onclick="showTab('subdomains')" id="nav-subdomains">
-                <i data-lucide="globe-2"></i> Subdomains
-            </button>
-            <button class="nav-item" onclick="showTab('http')" id="nav-http">
-                <i data-lucide="activity"></i> HTTP Services
-            </button>
-            <button class="nav-item" onclick="showTab('ports')" id="nav-ports">
-                <i data-lucide="plug"></i> Port Results
-            </button>
+        <nav class="rail-nav">
+            <button class="rail-btn active" onclick="showTab('overview')" id="nav-overview" data-tip="Overview" aria-label="Overview"><i data-lucide="layout-dashboard"></i></button>
+            <button class="rail-btn" onclick="showTab('subdomains')" id="nav-subdomains" data-tip="Subdomains" aria-label="Subdomains"><i data-lucide="globe-2"></i></button>
+            <button class="rail-btn" onclick="showTab('http')" id="nav-http" data-tip="HTTP Services" aria-label="HTTP Services"><i data-lucide="activity"></i></button>
+            <button class="rail-btn" onclick="showTab('ports')" id="nav-ports" data-tip="Port Results" aria-label="Port Results"><i data-lucide="plug"></i></button>
             {{if .HasScreenshots}}
-            <button class="nav-item" onclick="showTab('screenshots')" id="nav-screenshots">
-                <i data-lucide="camera"></i> Screenshots
-                <span class="nav-badge">{{.ScreenshotCount}}</span>
-            </button>
+            <button class="rail-btn" onclick="showTab('screenshots')" id="nav-screenshots" data-tip="Screenshots" aria-label="Screenshots"><i data-lucide="camera"></i><span class="rail-dot"></span></button>
             {{end}}
             {{if .HasWayback}}
-            <button class="nav-item" onclick="showTab('wayback')" id="nav-wayback">
-                <i data-lucide="history"></i> Wayback URLs
-                <span class="nav-badge">{{.WaybackCount}}</span>
-            </button>
+            <button class="rail-btn" onclick="showTab('wayback')" id="nav-wayback" data-tip="Wayback URLs" aria-label="Wayback URLs"><i data-lucide="history"></i><span class="rail-dot"></span></button>
             {{end}}
             {{if .HasTakeover}}
-            <button class="nav-item" onclick="showTab('takeover')" id="nav-takeover">
-                <i data-lucide="alert-triangle"></i> Takeover
-                <span class="nav-badge" style="background:rgba(239,68,68,0.15);color:#dc2626">{{.TakeoverCount}}</span>
-            </button>
+            <button class="rail-btn" onclick="showTab('takeover')" id="nav-takeover" data-tip="Takeover Risks" aria-label="Takeover Risks"><i data-lucide="alert-triangle"></i><span class="rail-dot danger"></span></button>
             {{end}}
             {{if .HasDiff}}
-            <button class="nav-item" onclick="showTab('changes')" id="nav-changes">
-                <i data-lucide="git-compare"></i> Changes
-            </button>
+            <button class="rail-btn" onclick="showTab('changes')" id="nav-changes" data-tip="Changes" aria-label="Changes"><i data-lucide="git-compare"></i></button>
             {{end}}
-        </div>
-
-        <!-- Filters -->
-        <button class="filter-toggle" onclick="toggleFilters(this)">
-            <span class="label"><i data-lucide="sliders-horizontal" style="width:14px;height:14px"></i> Filters</span>
-            <i data-lucide="chevron-down" style="width:14px;height:14px" id="filter-chevron"></i>
-        </button>
-
-        <div class="filter-body" id="filter-body">
-            <div class="filter-group">
-                <div class="filter-group-title">Search</div>
-                <input class="search-box" id="search-input" type="text" placeholder="Filter subdomains..." oninput="applyFilters()">
-            </div>
-
-            <div class="filter-group" id="domain-filter-group">
-                <div class="filter-group-title">Parent Domain</div>
-                <div class="checkbox-list" id="domain-checkboxes"></div>
-            </div>
-
-            <div class="filter-group" id="source-filter-group">
-                <div class="filter-group-title">Source</div>
-                <div class="checkbox-list" id="source-checkboxes"></div>
-            </div>
-
-            <div class="filter-group" id="status-filter-group" style="display:none">
-                <div class="filter-group-title">Status Code</div>
-                <div class="checkbox-list" id="status-checkboxes"></div>
-            </div>
-
-            <div class="filter-group" id="tech-filter-group" style="display:none">
-                <div class="filter-group-title">Technology</div>
-                <div class="checkbox-list" id="tech-checkboxes"></div>
-            </div>
-
-            <button class="btn-clear" onclick="clearFilters()">Clear All Filters</button>
-        </div>
+        </nav>
     </aside>
 
     <!-- ── Main Content ── -->
     <main class="main">
-        <!-- Greeting -->
-        <div class="greeting">
-            <div class="greeting-hello">Hello, welcome back</div>
-            <div class="greeting-title">Subdomain Dashboard</div>
-            <div class="greeting-sub">Scan ID: <strong>{{.ScanID}}</strong> &nbsp;&middot;&nbsp; {{.GeneratedAt}}</div>
+        <!-- Top bar -->
+        <header class="topbar">
+            <div>
+                <h1 class="page-title" id="page-title">Overview</h1>
+            </div>
+            <div class="topbar-actions">
+                <div class="date-label" id="date-label"><i data-lucide="calendar"></i> <span class="muted">Generated:</span> <strong>{{.GeneratedAt}}</strong></div>
+                <button class="pill" id="filters-pill" style="display:none" onclick="toggleDrawer()"><i data-lucide="sliders-horizontal"></i> Filters</button>
+            </div>
+        </header>
+
+        <!-- Table toolbar (search) — shown on table tabs only -->
+        <div class="table-toolbar" id="table-toolbar" style="display:none">
+            <div class="table-search">
+                <i data-lucide="search"></i>
+                <input id="search-input" type="text" placeholder="Filter subdomains..." oninput="applyFilters()">
+            </div>
         </div>
 
-        <!-- Stat Cards -->
-        <div class="stat-grid">
-            <div class="stat-card">
-                <div class="stat-icon purple"><i data-lucide="globe-2" style="width:18px;height:18px"></i></div>
-                <div class="stat-number">{{.SubdomainCount}}</div>
-                <div class="stat-label">Subdomains Found</div>
+        <!-- ── Overview Tab ── -->
+        <div id="tab-overview">
+            <!-- Scan Configuration: full-width band -->
+            <div class="info-card config-band">
+                <div class="orb"></div>
+                <div class="info-card-title">Scan Configuration</div>
+                <div class="config-grid">
+                    <div class="info-row">
+                        <span class="info-key">Scan ID</span>
+                        <span class="info-val" title="{{.ScanID}}">{{.ScanID}}</span>
+                    </div>
+                    {{if .WildcardFile}}
+                    <div class="info-row">
+                        <span class="info-key">Wildcard file</span>
+                        <span class="info-val" title="{{.WildcardFile}}">{{.WildcardFile}}</span>
+                    </div>
+                    {{end}}
+                    <div class="info-row">
+                        <span class="info-key">Threads</span>
+                        <span class="info-val">{{.Threads}}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-key">Timeout</span>
+                        <span class="info-val">{{.Timeout}}s</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-key">Retries</span>
+                        <span class="info-val">{{.Retries}}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-key">Rate limit</span>
+                        <span class="info-val">{{.RateLimit}}/s</span>
+                    </div>
+                </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-icon blue"><i data-lucide="layers" style="width:18px;height:18px"></i></div>
-                <div class="stat-number">{{.UniqueDomains}}</div>
-                <div class="stat-label">Parent Domains</div>
+
+            <!-- Left: stat cards · Right: tabbed chart panel -->
+            <div class="overview-grid">
+                <div class="stat-col">
+                    <div class="stat-card">
+                        <div class="stat-icon green"><i data-lucide="globe-2" style="width:18px;height:18px"></i></div>
+                        <div class="stat-number">{{.SubdomainCount}}</div>
+                        <div class="stat-label">Subdomains Found</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon green"><i data-lucide="layers" style="width:18px;height:18px"></i></div>
+                        <div class="stat-number">{{.UniqueDomains}}</div>
+                        <div class="stat-label">Parent Domains</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon green"><i data-lucide="zap" style="width:18px;height:18px"></i></div>
+                        <div class="stat-number">{{.UniqueSources}}</div>
+                        <div class="stat-label">Sources Used</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon orange"><i data-lucide="activity" style="width:18px;height:18px"></i></div>
+                        <div class="stat-number">{{.HTTPCount}}</div>
+                        <div class="stat-label">HTTP Services</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon orange"><i data-lucide="plug" style="width:18px;height:18px"></i></div>
+                        <div class="stat-number">{{.PortCount}}</div>
+                        <div class="stat-label">Hosts with Ports</div>
+                    </div>
+                    {{if .HasScreenshots}}
+                    <div class="stat-card">
+                        <div class="stat-icon green"><i data-lucide="camera" style="width:18px;height:18px"></i></div>
+                        <div class="stat-number">{{.ScreenshotCount}}</div>
+                        <div class="stat-label">Screenshots</div>
+                    </div>
+                    {{end}}
+                    {{if .HasDiff}}
+                    <div class="stat-card" id="diff-stat-card">
+                        <div class="stat-icon red"><i data-lucide="git-compare" style="width:18px;height:18px"></i></div>
+                        <div class="stat-number" id="diff-stat-number">0</div>
+                        <div class="stat-label">Changes Detected</div>
+                    </div>
+                    {{end}}
+                </div>
+
+                <!-- Tabbed breakdown panel -->
+                <div class="info-card chart-panel">
+                    <div class="chart-tabs">
+                        <button class="chart-tab" id="status-chart-card" data-chart="status" style="display:none" onclick="switchChart('status', this)">HTTP Status Codes</button>
+                        <button class="chart-tab" id="tech-chart-card" data-chart="tech" style="display:none" onclick="switchChart('tech', this)">Top Technologies</button>
+                        <button class="chart-tab active" data-chart="source" onclick="switchChart('source', this)">Sources</button>
+                        <button class="chart-tab" data-chart="domain" onclick="switchChart('domain', this)">Domains</button>
+                    </div>
+                    <div class="chart-body">
+                        <div class="chart-pane" data-chart="status" style="display:none"><div class="bar-chart" id="status-bars"></div></div>
+                        <div class="chart-pane" data-chart="tech" style="display:none"><div class="bar-chart" id="tech-bars"></div></div>
+                        <div class="chart-pane" data-chart="source"><div class="bar-chart" id="source-bars"></div></div>
+                        <div class="chart-pane" data-chart="domain" style="display:none"><div class="bar-chart" id="domain-bars"></div></div>
+                    </div>
+                </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-icon green"><i data-lucide="zap" style="width:18px;height:18px"></i></div>
-                <div class="stat-number">{{.UniqueSources}}</div>
-                <div class="stat-label">Sources Used</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon orange"><i data-lucide="activity" style="width:18px;height:18px"></i></div>
-                <div class="stat-number">{{.HTTPCount}}</div>
-                <div class="stat-label">HTTP Services</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon pink"><i data-lucide="plug" style="width:18px;height:18px"></i></div>
-                <div class="stat-number">{{.PortCount}}</div>
-                <div class="stat-label">Hosts with Ports</div>
-            </div>
-            {{if .HasScreenshots}}
-            <div class="stat-card">
-                <div class="stat-icon cyan"><i data-lucide="camera" style="width:18px;height:18px"></i></div>
-                <div class="stat-number">{{.ScreenshotCount}}</div>
-                <div class="stat-label">Screenshots</div>
-            </div>
-            {{end}}
-            {{if .HasDiff}}
-            <div class="stat-card" id="diff-stat-card">
-                <div class="stat-icon red"><i data-lucide="git-compare" style="width:18px;height:18px"></i></div>
-                <div class="stat-number" id="diff-stat-number">0</div>
-                <div class="stat-label">Changes Detected</div>
-            </div>
-            {{end}}
         </div>
 
         <!-- ── Subdomains Tab ── -->
-        <div id="tab-subdomains">
+        <div id="tab-subdomains" class="section-hidden">
             <div class="panel">
                 <div class="panel-header">
-                    <span class="panel-title">Subdomains</span>
-                    <span class="panel-count" id="subdomain-count-badge">{{.SubdomainCount}} total</span>
+                    <span class="panel-count" id="subdomain-count-badge" style="display:none">{{.SubdomainCount}} total</span>
                     <div class="panel-actions">
                         <button class="btn-sm" onclick="exportData('subdomains','csv')"><i data-lucide="download" style="width:12px;height:12px"></i> CSV</button>
                         <button class="btn-sm" onclick="exportData('subdomains','json')"><i data-lucide="file-json" style="width:12px;height:12px"></i> JSON</button>
@@ -184,8 +197,7 @@
         <div id="tab-http" class="section-hidden">
             <div class="panel">
                 <div class="panel-header">
-                    <span class="panel-title">HTTP Services</span>
-                    <span class="panel-count" id="http-count-badge">{{.HTTPCount}} total</span>
+                    <span class="panel-count" id="http-count-badge" style="display:none">{{.HTTPCount}} total</span>
                     <div class="panel-actions">
                         <button class="btn-sm" onclick="exportData('http','csv')"><i data-lucide="download" style="width:12px;height:12px"></i> CSV</button>
                         <button class="btn-sm" onclick="exportData('http','json')"><i data-lucide="file-json" style="width:12px;height:12px"></i> JSON</button>
@@ -223,8 +235,6 @@
         <div id="tab-ports" class="section-hidden">
             <div class="panel">
                 <div class="panel-header">
-                    <span class="panel-title">Port Scan Results</span>
-                    <span class="panel-count">{{.PortCount}} hosts</span>
                     <div class="panel-actions">
                         <button class="btn-sm" onclick="exportData('ports','csv')"><i data-lucide="download" style="width:12px;height:12px"></i> CSV</button>
                         <button class="btn-sm" onclick="exportData('ports','json')"><i data-lucide="file-json" style="width:12px;height:12px"></i> JSON</button>
@@ -265,8 +275,6 @@
         <div id="tab-screenshots" class="section-hidden">
             <div class="panel">
                 <div class="panel-header">
-                    <span class="panel-title">Screenshots</span>
-                    <span class="panel-count">{{.ScreenshotCount}} captured</span>
                     <div class="panel-actions">
                         <div class="view-toggle">
                             <button class="active" onclick="setScreenshotView('grid', this)"><i data-lucide="grid-3x3" style="width:12px;height:12px"></i> Grid</button>
@@ -285,11 +293,10 @@
         <div id="tab-wayback" class="section-hidden">
             <div class="panel">
                 <div class="panel-header">
-                    <span class="panel-title">Wayback URLs</span>
-                    <span class="panel-count" id="wayback-count-badge">{{.WaybackCount}} URLs</span>
+                    <span class="panel-count" id="wayback-count-badge" style="display:none">{{.WaybackCount}} URLs</span>
                     <div class="panel-actions">
                         <div class="filter-group" style="margin:0;padding:0">
-                            <select id="wayback-domain-filter" onchange="renderWayback()" style="padding:5px 10px;border-radius:8px;border:1px solid rgba(200,185,255,0.4);font-size:11px;color:#5b5075;background:rgba(255,255,255,0.7);cursor:pointer">
+                            <select id="wayback-domain-filter" onchange="renderWayback()" style="padding:5px 10px;border-radius:8px;border:1px solid rgba(255,255,255,0.12);font-size:11px;color:#a1a1aa;background:#1e1e22;cursor:pointer">
                                 <option value="">All Domains</option>
                             </select>
                         </div>
@@ -326,8 +333,7 @@
         <div id="tab-takeover" class="section-hidden">
             <div class="panel">
                 <div class="panel-header">
-                    <span class="panel-title">Subdomain Takeover Risks</span>
-                    <span class="panel-count" style="background:rgba(239,68,68,0.12);color:#dc2626">{{.TakeoverCount}} vulnerabilities</span>
+                    <span class="panel-count" style="background:rgba(248,113,113,0.15);color:#f87171">{{.TakeoverCount}} vulnerabilities</span>
                     <div class="panel-actions">
                         <button class="btn-sm" onclick="exportData('takeover','csv')"><i data-lucide="download" style="width:12px;height:12px"></i> CSV</button>
                         <button class="btn-sm" onclick="exportData('takeover','json')"><i data-lucide="file-json" style="width:12px;height:12px"></i> JSON</button>
@@ -356,8 +362,7 @@
         <div id="tab-changes" class="section-hidden">
             <div class="panel">
                 <div class="panel-header">
-                    <span class="panel-title">Changes Detected</span>
-                    <span class="panel-count" id="changes-count-badge">0 changes</span>
+                    <span class="panel-count" id="changes-count-badge" style="display:none">0 changes</span>
                     <div class="panel-actions">
                         <button class="btn-sm" onclick="exportData('changes','json')"><i data-lucide="file-json" style="width:12px;height:12px"></i> Export Diff</button>
                     </div>
@@ -369,65 +374,56 @@
 
     </main>
 
-    <!-- ── Right Panel ── -->
-    <aside class="right-panel">
-        <!-- Scan Info -->
-        <div class="info-card">
-            <div class="orb"></div>
-            <div class="info-card-title">Scan Configuration</div>
-            <div class="info-row">
-                <span class="info-key">Scan ID</span>
-                <span class="info-val">{{.ScanID}}</span>
-            </div>
-            {{if .WildcardFile}}
-            <div class="info-row">
-                <span class="info-key">Wildcard file</span>
-                <span class="info-val" title="{{.WildcardFile}}">{{.WildcardFile}}</span>
-            </div>
-            {{end}}
-            <div class="info-row">
-                <span class="info-key">Threads</span>
-                <span class="info-val">{{.Threads}}</span>
-            </div>
-            <div class="info-row">
-                <span class="info-key">Timeout</span>
-                <span class="info-val">{{.Timeout}}s</span>
-            </div>
-            <div class="info-row">
-                <span class="info-key">Retries</span>
-                <span class="info-val">{{.Retries}}</span>
-            </div>
-            <div class="info-row">
-                <span class="info-key">Rate limit</span>
-                <span class="info-val">{{.RateLimit}}/s</span>
-            </div>
+</div>
+
+<!-- ── Filter Drawer ── -->
+<div class="drawer-backdrop" id="drawer-backdrop" onclick="toggleDrawer(false)"></div>
+<aside class="drawer" id="filter-drawer">
+    <div class="drawer-head">
+        <span class="drawer-title">Filters</span>
+        <button class="drawer-close" onclick="toggleDrawer(false)"><i data-lucide="x" style="width:16px;height:16px"></i></button>
+    </div>
+
+    <button class="filter-toggle" onclick="toggleFilters(this)">
+        <span class="label"><i data-lucide="sliders-horizontal" style="width:14px;height:14px"></i> Refine</span>
+        <i data-lucide="chevron-down" style="width:14px;height:14px" id="filter-chevron"></i>
+    </button>
+
+    <div class="filter-body" id="filter-body">
+        <div class="filter-group" id="domain-filter-group">
+            <div class="filter-group-title">Parent Domain</div>
+            <div class="checkbox-list" id="domain-checkboxes"></div>
         </div>
 
-        <!-- Status Code Distribution -->
-        <div class="info-card" id="status-chart-card" style="display:none">
-            <div class="info-card-title">Status Codes</div>
-            <div class="bar-chart" id="status-bars"></div>
+        <div class="filter-group" id="source-filter-group">
+            <div class="filter-group-title">Source</div>
+            <div class="checkbox-list" id="source-checkboxes"></div>
         </div>
 
-        <!-- Technology Breakdown -->
-        <div class="info-card" id="tech-chart-card" style="display:none">
-            <div class="info-card-title">Technologies</div>
-            <div class="bar-chart" id="tech-bars"></div>
+        <div class="filter-group" id="status-filter-group" style="display:none">
+            <div class="filter-group-title">Status Code</div>
+            <div class="checkbox-list" id="status-checkboxes"></div>
         </div>
 
-        <!-- Source Breakdown -->
-        <div class="info-card">
-            <div class="info-card-title">Source Breakdown</div>
-            <div class="bar-chart" id="source-bars"></div>
+        <div class="filter-group" id="tech-filter-group" style="display:none">
+            <div class="filter-group-title">Technology</div>
+            <div class="checkbox-list" id="tech-checkboxes"></div>
         </div>
 
-        <!-- Domain Breakdown -->
-        <div class="info-card">
-            <div class="info-card-title">Domain Breakdown</div>
-            <div class="bar-chart" id="domain-bars"></div>
-        </div>
-    </aside>
+        <button class="btn-clear" onclick="clearFilters()">Clear All Filters</button>
+    </div>
+</aside>
 
+<!-- ── Screenshot Lightbox ── -->
+<div class="lightbox" id="lightbox" onclick="if(event.target===this)closeLightbox()">
+    <div class="lightbox-inner">
+        <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close"><i data-lucide="x" style="width:18px;height:18px"></i></button>
+        <img id="lightbox-img" src="" alt="Screenshot">
+        <div class="lightbox-caption">
+            <div class="lightbox-title" id="lightbox-title"></div>
+            <a class="lightbox-url" id="lightbox-url" href="" target="_blank" rel="noopener"></a>
+        </div>
+    </div>
 </div>
 
 <script>
